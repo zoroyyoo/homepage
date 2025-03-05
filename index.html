@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        fetch('https://api.github.com/repos/zoroyyoo/repository/releases/latest', {
+            headers: {
+            'Accept': 'application/vnd.github.v3+json'
+        }
+        })
+        .then(response => response.json())
+        .then(releaseData => {
+            const jsonAsset = releaseData.assets.find(asset => asset.name === 'metadata.json');
+            return fetch(jsonAsset.browser_download_url);
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error fetching JSON:', error);
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
